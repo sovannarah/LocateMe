@@ -45,6 +45,7 @@ class Login extends React.Component {
               errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
             });
         } else {
+            this.getData();
             this._getLocationAsync();
         }
     }
@@ -75,7 +76,9 @@ class Login extends React.Component {
             })
             .catch((error) => {
                 if(error) {
-                    this.setState({errorMessage: 'Cet utilisateur existe déja'});
+                    this.setState({
+                        errorMessage: 'Cet utilisateur existe déja'
+                    });
                 }
             })
         } else {

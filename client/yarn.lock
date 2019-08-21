@@ -969,6 +969,11 @@
     lodash "^4.5.0"
     prop-types "^15.6.1"
 
+Concur@~0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/Concur/-/Concur-0.3.0.tgz#4778eda8b5d3858ffd9063314b7fda7b9a6a2472"
+  integrity sha1-R3jtqLXThY/9kGMxS3/ae5pqJHI=
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -2940,6 +2945,11 @@ isobject@^3.0.0, isobject@^3.0.1:
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
 
+isomorph@~0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/isomorph/-/isomorph-0.3.0.tgz#674670b35b2eb4939a57de87acad7fc2d845462d"
+  integrity sha1-Z0Zws1sutJOaV96HrK1/wthFRi0=
+
 isomorphic-fetch@^2.1.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
@@ -4327,6 +4337,11 @@ pump@^3.0.0:
     end-of-stream "^1.1.0"
     once "^1.3.1"
 
+punycode@^1.3.2:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
+  integrity sha1-wNWmOycYgArY4esPpSachN1BhF4=
+
 qs@^6.5.0:
   version "6.8.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.8.0.tgz#87b763f0d37ca54200334cd57bb2ef8f68a1d081"
@@ -5574,6 +5589,15 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
+
+validators@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/validators/-/validators-0.3.1.tgz#f6e3c6d9452efeb0c6620b6bc12cd7db541d536d"
+  integrity sha1-9uPG2UUu/rDGYgtrwSzX21QdU20=
+  dependencies:
+    Concur "~0.3.0"
+    isomorph "~0.3.0"
+    punycode "^1.3.2"
 
 vary@~1.1.2:
   version "1.1.2"
