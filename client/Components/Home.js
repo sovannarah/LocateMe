@@ -5,13 +5,16 @@ import {
     StyleSheet
 } from 'react-native';
 import Menu from './Menu';
+import Maps from './Maps';
 
 class Home extends React.Component {
+
+
     render() {
         return(
             <View style={container.main}>
-                <Text>home page</Text>
-                <Menu />
+                <Maps />
+                <Menu nav={this.props}/>
             </View>
         );
     }
