@@ -53,17 +53,15 @@ class Menu extends React.Component {
     }
 
     SendSms = async() => {
-
-        // const isAvailable = await SMS.isAvailableAsync();
-        // if (isAvailable) {
-        //     const { result } = await SMS.sendSMSAsync(
-        //         ['+33654340203', '+33605943434'],
-        //         'Ecrire votre message La'
-        //       );
-        // } else {
-        //     console.log("Pas de sms Reve pas");
-        // }
-
+        const isAvailable = await SMS.isAvailableAsync();
+        if (isAvailable) {
+            const { result } = await SMS.sendSMSAsync(
+                ['+33654340203', '+33605943434'],
+                'Ecrire votre message La'
+              );
+        } else {
+            console.log("Pas de sms Reve pas");
+        }
     }
 
     render() {

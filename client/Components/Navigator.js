@@ -25,6 +25,9 @@ const MainNavigator = createStackNavigator(
             screen: NewContact,
         }
     },
+    {
+        initialRouteName: 'Home'
+    }
 )
 
 export default createAppContainer(MainNavigator)

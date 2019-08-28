@@ -10,6 +10,7 @@ import Maps from './Maps';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import { isPointWithinRadius } from 'geolib';
+import Login from './Login';
 
 class Home extends React.Component {
 
@@ -96,7 +97,7 @@ class Home extends React.Component {
                 </View>
             );
         } else {
-            return(<View></View>);
+            return(<Login />);
         }
     }
 }

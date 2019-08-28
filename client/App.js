@@ -1,27 +1,22 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Nav from './Components/Navigator'
-import Menu from './Components/Menu';
-import * as SMS from 'expo-sms';
+import Login from './Components/Login';
 
 class App extends React.Component {
 
-  SendSms = async() => {
-    const isAvailable = await SMS.isAvailableAsync();
-    if (isAvailable) {
-        const { result } = await SMS.sendSMSAsync(
-            ['+33654340203', '+33605943434'],
-            'Ecrire votre message La'
-          );
-    } else {
-        console.log("Pas de sms Reve pas");
-    }
+  constructor(props) {
+    super(props);
+      this.state = {
+          user: null,
+      }
   }
 
+
   render() {
-    return (
-      <Nav screenProps={this.SendSms}/>
-    );
+      return (
+        <Nav />
+      );
   }
 }
 const styles = StyleSheet.create({
