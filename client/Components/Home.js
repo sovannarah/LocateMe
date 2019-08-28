@@ -25,8 +25,7 @@ class Home extends React.Component {
         this._getLocationAsync();
     }
 
-    componentDidMount() {
-        
+    componentDidMount() {  
         this._getUsers();
         this._interval = setInterval(() => {
             this._getUsers();

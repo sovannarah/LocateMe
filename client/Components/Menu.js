@@ -9,6 +9,7 @@ import {
     Slider
 } from 'react-native';
 import Axios from 'axios';
+import * as SMS from 'expo-sms';
 
 class Menu extends React.Component {
     
@@ -19,6 +20,7 @@ class Menu extends React.Component {
 
         }
         this.API_URL = 'https://locatemeapi.herokuapp.com';
+        console.log(this.props.screenProps)
     }
 
 
@@ -50,6 +52,20 @@ class Menu extends React.Component {
         this.setState({id_user: data});
     }
 
+    SendSms = async() => {
+
+        // const isAvailable = await SMS.isAvailableAsync();
+        // if (isAvailable) {
+        //     const { result } = await SMS.sendSMSAsync(
+        //         ['+33654340203', '+33605943434'],
+        //         'Ecrire votre message La'
+        //       );
+        // } else {
+        //     console.log("Pas de sms Reve pas");
+        // }
+
+    }
+
     render() {
         return(
             <View style={container.main}>
@@ -72,7 +88,7 @@ class Menu extends React.Component {
                         <Image style={image.dimension} source={require('../Images/Icones/logout.png')} />
                     </TouchableOpacity>
                     <TouchableOpacity 
-                    onPress={this.props.getProx}
+                    onPress={this.SendSms}
                     style={input.dimension}>
                         <Image style={image.dimension} source={require('../Images/Icones/message.png')} />
                     </TouchableOpacity>

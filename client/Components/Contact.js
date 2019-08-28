@@ -6,7 +6,8 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native';
-import * as SMS from 'expo-sms';
+// import * as SMS from 'expo-sms';
+// import console = require('console');
 
 class Contact extends React.Component {
 
@@ -14,20 +15,22 @@ class Contact extends React.Component {
         super(props);
         this.state = {
             users: this.props.navigation.getParam('usersNumber'),
-            selected: null
+            selected: null,
+            result: null
         }
     }
 
-    smsSend = async() => {
-        const isAvailable = await SMS.isAvailableAsync();
-        if (isAvailable) {
-            const { result } = await SMS.sendSMSAsync(
-                ['0634178339']
-              );
-        } else {
-        // misfortune... there's no SMS available on this device
-        }
-    }
+    // smsSend = async() => {
+    //     const isAvailable = await SMS.isAvailableAsync();
+    //     if (isAvailable) {
+    //         const { result } = await SMS.sendSMSAsync(
+    //             ['0123456789', '9876543210'], 'tete'
+    //         )
+    //     } else {
+    //     // misfortune... there's no SMS available on this device
+    //     }
+        
+    // }
 
     render() {
         return(
