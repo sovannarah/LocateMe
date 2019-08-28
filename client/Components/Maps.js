@@ -1,83 +1,108 @@
 import React from 'react';
 import {
-    View
+    View,
+    Text,
+    AsyncStorage
 } from 'react-native';
-import MapView, {Marker, Circle} from 'react-native-maps';
-import * as Location from 'expo-location';
+import MapView, {Marker, Circle, Callout, CalloutSubview} from 'react-native-maps';
 import * as Permissions from 'expo-permissions';
 import Axios from 'axios';
+import Card from './Card';
+import * as Contacts from 'expo-contacts';
 
 class Maps extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            location: null,
-            region: null,
-            users: []
+            id_user: null,
+            location: this.props.location,
+            region: this.props.region,
+            users: this.props.users,
+            name: ''
         }
         this.API_URL = 'https://locatemeapi.herokuapp.com';
     }
 
-
     componentDidMount() {
-        this._getLocationAsync();
-        this._getUsers();
+        this._getData();
     }
 
-    _getLocationAsync = async() => {
-        let {status} = await Permissions.askAsync(Permissions.LOCATION);
-        if(status !== 'granted') {
-            this.setState({
-                errorMessage : "La permission d'accéder à l'emplacement a été refusée",
-            })
+    _updatePosition = () => {
+        let body = {
+            "phoneNumber": this.state.number, 
+            "lat": this.state.region.latitude,
+            "lng": this.state.region.longitude
         }
-        let location = await Location.getCurrentPositionAsync({});
-        this.setState({ location })
-        this.setState({
-            region: {
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-                latitudeDelta: 1,
-                longitudeDelta: 1
+        let header = {
+            headers: {
+                'Content-Type': 'application/json',
             }
-        })
-    }
-
-    _getUsers = () => {
-        Axios.get(this.API_URL + '/all')
+        }
+        Axios.post(this.API_URL + '/update/' + this.id_user, body, header)
         .then((res) => {
-            if(res.data) {
-                this.setState({users: res.data});
-            }
+            console.log(res.data);
         })
         .catch((error) => {
-            console.log(error)
+            console.log(error);
         })
+    }
+
+    _getData = async() => {
+        let userData = await AsyncStorage.getItem('userData');
+        let data = JSON.parse(userData);
+        this.setState({id_user: data});
+    }
+
+    addName = newName => {
+        this.setState({name : newName})
+    }
+
+    addContact = async(number) => {
+        this.props.nav.navigate('NewContact', {phone: number})
+        // let {status} = await Permissions.getAsync(Permissions.CONTACTS);
+        // console.log(number)
+        // if(status !== 'granted') {
+        //     this.setState({
+        //         errorMessage : "La permission d'accéder à l'emplacement a été refusée",
+        //     })
+        // } else {
+        //     // console.log(Contacts.Fields);
+        //     const contact = {
+        //         [Contacts.Fields.FirstName]: 'avosssss ',
+        //         [Contacts.Fields.PhoneNumbers]: [{number}]
+        //     };
+        //     const contactId = await Contacts.addContactAsync(contact);
+        // }
     }
 
     render() {
-        if(this.state.region) {
+        if(this.state.users.length > 0) {
             return(
                 <MapView 
                 style={{flex: 1}}
                 initialRegion={this.state.region}> 
-                    <Marker
-                    coordinate={this.state.region}
-                    />
                     {this.state.users.map((user, i) => (
-                        <Marker 
-                        key={i}
-                        coordinate={{latitude: user.lat, longitude: user.lng, latitudeDelta: 1, longitudeDelta: 1}}
-                        title={user.phoneNumber}
-                        />
-                    ))}
-                    {/* <Circle
-                    center={this.state.region}
-                    radius={200}
-                    strokeWidth={150}
-                    strokeColor="red"
-                    fillColor="rgba(50,50,50, 0.5)"/> */}
+                        this.state.id_user === user._id ?
+                            // <Marker 
+                            // key={i}
+                            // coordinate={{latitude: user.lat, longitude: user.lng, latitudeDelta: 1, longitudeDelta: 1}}
+                            // title={'Moi'}
+                            // />
+                                <Circle key={i} center={{latitude: user.lat, longitude: user.lng}} 
+                                radius={this.props.value*1000} strokeWidth={1} strokeColor="red" fillColor={'rgba(255,0,0,0.2)'}/>
+                            // </Marker>
+                        :
+                            <Marker 
+                            key={i}
+                            coordinate={{latitude: user.lat, longitude: user.lng, latitudeDelta: 1, longitudeDelta: 1}}
+                            title={user.phoneNumber}
+                            onCalloutPress={() => {this.addContact(user.phoneNumber)}}>
+                                <Callout>
+                                    <Card usr={user} changeName={this.addName}/>
+                                </Callout>
+                            </Marker>
+                    ))} 
                 </MapView>
             );
         } else {
