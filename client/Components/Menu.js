@@ -30,9 +30,7 @@ class Menu extends React.Component {
     logout = () => {
         Axios.get(this.API_URL + '/logout/' + this.state.id_user)
         .then((res) => {
-            // if(res.data) {
-               this.clearData();
-            // }
+            this.clearData();
         })
         .catch((error) => {
             console.log(error);
@@ -40,8 +38,8 @@ class Menu extends React.Component {
     }
 
     clearData = async() => {
-        AsyncStorage.getAllKeys().then(AsyncStorage.multiRemove);
-        console.log(AsyncStorage.getAllKeys())
+        let data = await AsyncStorage.getAllKeys().then(AsyncStorage.multiRemove);
+        console.log(data)
         this.getData()
     }
     
