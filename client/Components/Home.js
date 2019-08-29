@@ -2,7 +2,8 @@ import React from 'react';
 import {
     View,
     Text,
-    StyleSheet
+    StyleSheet,
+    AsyncStorage
 } from 'react-native';
 import Axios from 'axios';
 import Menu from './Menu';
@@ -17,6 +18,8 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            idUser: null,
+            user: null,
             range: 3,
             users: null,
             region: null,
@@ -26,11 +29,12 @@ class Home extends React.Component {
         this._getLocationAsync();
     }
 
-    componentDidMount() {  
+    componentDidMount() { 
+        this.getData(); 
         this._getUsers();
         this._interval = setInterval(() => {
             this._getUsers();
-        }, 5000);
+        }, 2000);
     }
 
     _getLocationAsync = async() => {
@@ -55,6 +59,7 @@ class Home extends React.Component {
         Axios.get(this.API_URL + '/all')
         .then((res) => {
             if(res.data) {
+                // console.log(res.data)
                 this.setState({users: res.data});
             }
         })
@@ -81,23 +86,36 @@ class Home extends React.Component {
         }
     }
 
+    getData = async() => {
+        let userData = await AsyncStorage.getItem('userData');
+        let data = JSON.parse(userData);
+        if(data) {
+        this.setState({user: data});
+        } else {
+            this.props.navigation.navigate('Login')
+        }
+    }
+
     changeRange = value => {
         this.setState({range: value})
     }
+
+    
 
     render() {
         if(this.state.users) {
             return(
                 <View style={container.main}>
-                    <Maps nav={this.props.navigation} 
+                    <Maps 
+                    nav={this.props.navigation} 
                     value={this.state.range} 
                     users={this.state.users}
                     region={this.state.region} />
-                    <Menu nav={this.props} changeVal={this.changeRange} getProx={this._getProximityUsers}/>
+                    <Menu nav={this.props.navigation} changeVal={this.changeRange} getProx={this._getProximityUsers}/>
                 </View>
             );
         } else {
-            return(<Login />);
+            return(<View></View>);
         }
     }
 }

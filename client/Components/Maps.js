@@ -77,7 +77,7 @@ class Maps extends React.Component {
     }
 
     render() {
-        if(this.state.users.length > 0) {
+        if(this.state.users.length > 0 && this.props.value) {
             return(
                 <MapView 
                 style={{flex: 1}}

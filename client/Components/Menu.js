@@ -17,10 +17,9 @@ class Menu extends React.Component {
         super(props);
         this.state = {
             id_user: null,
-
+            tnp: null
         }
         this.API_URL = 'https://locatemeapi.herokuapp.com';
-        console.log(this.props.screenProps)
     }
 
 
@@ -31,10 +30,9 @@ class Menu extends React.Component {
     logout = () => {
         Axios.get(this.API_URL + '/logout/' + this.state.id_user)
         .then((res) => {
-            console.log(res.data)
-            if(res.data) {
+            // if(res.data) {
                this.clearData();
-            }
+            // }
         })
         .catch((error) => {
             console.log(error);
@@ -43,24 +41,17 @@ class Menu extends React.Component {
 
     clearData = async() => {
         AsyncStorage.getAllKeys().then(AsyncStorage.multiRemove);
-        this.props.nav.navigation.navigate('Login');
+        console.log(AsyncStorage.getAllKeys())
+        this.getData()
     }
     
     getData = async() => {
         let userData = await AsyncStorage.getItem('userData');
         let data = JSON.parse(userData);
-        this.setState({id_user: data});
-    }
-
-    SendSms = async() => {
-        const isAvailable = await SMS.isAvailableAsync();
-        if (isAvailable) {
-            const { result } = await SMS.sendSMSAsync(
-                ['+33654340203', '+33605943434'],
-                'Ecrire votre message La'
-              );
+        if(data) {
+            this.setState({id_user: data});
         } else {
-            console.log("Pas de sms Reve pas");
+            this.props.nav.navigate('Login')
         }
     }
 
@@ -86,7 +77,7 @@ class Menu extends React.Component {
                         <Image style={image.dimension} source={require('../Images/Icones/logout.png')} />
                     </TouchableOpacity>
                     <TouchableOpacity 
-                    onPress={this.SendSms}
+                    onPress={this.props.getProx}
                     style={input.dimension}>
                         <Image style={image.dimension} source={require('../Images/Icones/message.png')} />
                     </TouchableOpacity>

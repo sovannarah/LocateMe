@@ -30,7 +30,9 @@ class Login extends React.Component {
             number: '',
             fontLoad: false,
             location: null,
-            errorMessage: null
+            errorMessage: null,
+            isMounted: null,
+            idUser: null
         }
         this.API_URL = 'https://locatemeapi.herokuapp.com';
     }
@@ -45,7 +47,7 @@ class Login extends React.Component {
               errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
             });
         } else {
-            this.getData();
+            // this.getData();
             this._getLocationAsync();
         }
     }
@@ -70,7 +72,6 @@ class Login extends React.Component {
             Axios.post(this.API_URL + '/login', body, header)
             .then((res) => {
                 if(res.data) {
-                    console.log('res', res.data)
                     this.storeData(res.data);
                 }
             })
@@ -108,6 +109,7 @@ class Login extends React.Component {
             console.log('Something went wrong', error);
         }
     }
+
 
     _getLocationAsync = async() => {
         let {status} = await Permissions.askAsync(Permissions.LOCATION);
